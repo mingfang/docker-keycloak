@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#sv start socklog-unix || exit 1
+
+source /etc/envvars
+env
+
+cd /keycloak/bin
+
+exec 2>&1
+exec ./standalone.sh
