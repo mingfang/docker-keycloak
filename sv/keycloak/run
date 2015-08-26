@@ -8,4 +8,4 @@ env
 cd /keycloak/bin
 
 exec 2>&1
-exec ./standalone.sh
+exec ./standalone.sh -Djboss.bind.address=0.0.0.0
