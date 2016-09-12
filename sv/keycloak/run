@@ -3,9 +3,12 @@
 #sv start socklog-unix || exit 1
 
 source /etc/envvars
-env
 
 cd /keycloak/bin
 
+if [ $KEYCLOAK_USER ] && [ $KEYCLOAK_PASSWORD ]; then
+    ./add-user-keycloak.sh --user $KEYCLOAK_USER --password $KEYCLOAK_PASSWORD
+fi
+
 exec 2>&1
-exec ./standalone.sh -Djboss.bind.address=0.0.0.0
+exec ./standalone.sh -b 0.0.0.0
