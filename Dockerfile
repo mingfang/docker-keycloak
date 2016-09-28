@@ -19,10 +19,12 @@ RUN apt-get install -y --no-install-recommends vim less net-tools inetutils-ping
 RUN add-apt-repository ppa:webupd8team/java -y && \
     apt-get update && \
     echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get install -y oracle-java8-installer
+    apt-get install -y oracle-java8-installer && \
+    apt install oracle-java8-unlimited-jce-policy && \
+    rm -r /var/cache/oracle-jdk8-installer
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
-RUN wget -O - https://downloads.jboss.org/keycloak/2.1.0.Final/keycloak-2.1.0.Final.tar.gz | tar zx
+RUN wget -O - https://downloads.jboss.org/keycloak/2.2.1.Final/keycloak-2.2.1.Final.tar.gz | tar zx
 RUN mv keycloak-* keycloak
 
 # Add runit services
