@@ -4,11 +4,16 @@
 
 source /etc/envvars
 
-cd /keycloak/bin
+cd /keycloak
 
 if [ $KEYCLOAK_USER ] && [ $KEYCLOAK_PASSWORD ]; then
-    ./add-user-keycloak.sh --user $KEYCLOAK_USER --password $KEYCLOAK_PASSWORD
+    ./bin/add-user-keycloak.sh --user $KEYCLOAK_USER --password $KEYCLOAK_PASSWORD
 fi
 
 exec 2>&1
-exec ./standalone.sh -b 0.0.0.0
+
+if [ -d data ]; then
+  exec ./bin/standalone.sh -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=data -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
+else
+  exec ./bin/standalone.sh -b 0.0.0.0
+fi
