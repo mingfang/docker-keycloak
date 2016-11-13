@@ -1,0 +1,1 @@
+/keycloak/bin/standalone.sh -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=keycloak-data.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
