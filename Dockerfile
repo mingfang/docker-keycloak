@@ -25,7 +25,7 @@ RUN add-apt-repository ppa:webupd8team/java -y && \
     rm -r /var/cache/oracle-jdk8-installer
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
-RUN wget -O - https://downloads.jboss.org/keycloak/2.5.4.Final/keycloak-2.5.4.Final.tar.gz | tar zx
+RUN wget -O - https://downloads.jboss.org/keycloak/3.0.0.Final/keycloak-3.0.0.Final.tar.gz | tar zx
 RUN mv keycloak-* keycloak
 
 # Add runit services
