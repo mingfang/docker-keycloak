@@ -10,10 +10,9 @@ if [ $KEYCLOAK_USER ] && [ $KEYCLOAK_PASSWORD ]; then
     ./bin/add-user-keycloak.sh --user $KEYCLOAK_USER --password $KEYCLOAK_PASSWORD
 fi
 
-exec 2>&1
-
-if [ -d data ]; then
-  exec ./bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=data -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
-else
-  exec ./bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0
+if [ $POSTGRES_HOST ]; then
+  /keycloak/bin/jboss-cli.sh --file=/setup/setup_postgresql.cli
 fi
+
+exec 2>&1
+exec ./bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0

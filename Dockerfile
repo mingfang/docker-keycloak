@@ -27,6 +27,17 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 RUN wget -O - https://downloads.jboss.org/keycloak/3.4.3.Final/keycloak-3.4.3.Final.tar.gz | tar zx
 RUN mv keycloak-* keycloak
+RUN cp /keycloak/standalone/configuration/standalone.xml /keycloak/standalone/configuration/standalone.xml.original
+
+#DB modules
+COPY modules/mysql /keycloak/modules/system/layers/base/mysql
+RUN wget -O /keycloak/modules/system/layers/base/mysql/main/mysql-connector-java.jar http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.45/mysql-connector-java-5.1.45.jar
+
+COPY modules/postgresql /keycloak/modules/system/layers/base/postgresql
+RUN wget -O /keycloak/modules/system/layers/base/postgresql/main/postgresql.jar http://central.maven.org/maven2/org/postgresql/postgresql/42.2.1/postgresql-42.2.1.jar
+
+COPY setup /setup
+RUN /keycloak/bin/jboss-cli.sh --file=/setup/setup_common.cli
 
 # Add runit services
 COPY sv /etc/service 

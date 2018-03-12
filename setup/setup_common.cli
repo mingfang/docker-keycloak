@@ -1,0 +1,4 @@
+embed-server
+/subsystem=undertow/server=default-server/http-listener=default/:write-attribute(name=proxy-address-forwarding,value=true)
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=postgresql,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
